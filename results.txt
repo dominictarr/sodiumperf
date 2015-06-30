@@ -1,0 +1,57 @@
+operation                        ops/sec ops/ops(hash)
+hash_sha256                       553770 1.00
+hash                              568247 1.03
+auth                              243677 0.440
+verify                            299573 0.541
+randomBytes(32)                   315536 0.570
+randombytes(new Buffer(32))       286345 0.517
+randombytes(b)                    415480 0.750
+box_keypair                        11736 0.0212
+scalarmult                         13078 0.0236
+sign_keypair                       12680 0.0229
+ed25519_pk_to_curve25519           40888 0.0738
+ed25519_sk_to_curve25519          600318 1.08
+--- encrypting 32 byte buffers ---
+hash_sha256                       609642 1.00
+hash                              577254 0.947
+auth                              222392 0.365
+verify                            304190 0.499
+secretbox_easy                    599209 0.983
+secretbox_open_easy               491047 0.805
+secretbox_open_easy (fail)        562999 0.923
+box_easy                           12825 0.0210
+box_open_easy                      13378 0.0219
+box_open_easy (fail)               13391 0.0220
+--- encrypting 1024 byte buffers ---
+hash_sha256                       109240 1.00
+hash                              144222 1.32
+auth                              109238 1.00
+verify                            120682 1.10
+secretbox_easy                    205359 1.88
+secretbox_open_easy               199299 1.82
+secretbox_open_easy (fail)        339109 3.10
+box_easy                           11268 0.103
+box_open_easy                      12653 0.116
+box_open_easy (fail)               13092 0.120
+--- encrypting 8192 byte buffers ---
+hash_sha256                        15879 1.00
+hash                               24119 1.52
+auth                               23056 1.45
+verify                             23277 1.47
+secretbox_easy                     45501 2.87
+secretbox_open_easy                47257 2.98
+secretbox_open_easy (fail)         95581 6.02
+box_easy                           10355 0.652
+box_open_easy                      10686 0.673
+box_open_easy (fail)               11858 0.747
+--- encrypting 1048576 byte buffers ---
+hash_sha256                          126 1.00
+hash                                 196 1.56
+auth                                 196 1.56
+verify                               196 1.56
+secretbox_easy                       409 3.25
+secretbox_open_easy                  408 3.24
+secretbox_open_easy (fail)           950 7.54
+box_easy                             394 3.13
+box_open_easy                        395 3.13
+box_open_easy (fail)                 887 7.04
