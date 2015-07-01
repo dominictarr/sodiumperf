@@ -1,31 +1,6 @@
 var crypto = require('crypto')
 var sodium = require('sodium').api
 
-//operations to test
-
-// hash(32 bytes)
-
-// sign_detached(32 bytes)
-
-// verify_detached(sig)
-
-// box_easy(32 bytes, nonce, pk, sk)
-
-// box_open_easy(boxed, nonce, pk, sk)
-
-// secretbox_easy(32 bytes, nonce, key)
-
-// secretbox_open_easy(boxed, nonce, key)
-
-// fail to open
-// secretbox_open_easy(boxed, nonce, key)
-
-// keypair()
-
-// keypair_seed()
-
-// box_open_
-
 function run (op) {
 
   var start = Date.now(), i = 0, end = Date.now()
