@@ -1,5 +1,5 @@
 var crypto = require('crypto')
-var sodium = require('sodium').api
+var sodium = require('chloride').api
 
 function run (op) {
 
