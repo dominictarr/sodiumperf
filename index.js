@@ -138,8 +138,18 @@ function encrypt_perf (msg) {
 
   var sig_box = sodium.crypto_sign(msg, keys.secretKey)
 
-  print('sign_verify', run(function () {
+  print('sign_open', run(function () {
     return sodium.crypto_sign_open(sig_box, keys.publicKey)
+  }), hashes)
+
+  print('sign_detached', run(function () {
+    return sodium.crypto_sign_detached(msg, keys.secretKey)
+  }), hashes)
+
+  var sig = sodium.crypto_sign_detached(msg, keys.secretKey)
+
+  print('sign_verify_detached', run(function () {
+    return sodium.crypto_sign_verify_detached(sig, msg, keys.publicKey)
   }), hashes)
 
   print('secretbox_easy', run(function () {
