@@ -128,11 +128,19 @@ function encrypt_perf (msg) {
 
   var mac = sodium.crypto_auth(msg, key)
 
-  print('verify', run(function () {
+  print('auth_verify', run(function () {
     return sodium.crypto_auth_verify(mac, msg, key)
   }), hashes)
 
+  print('sign', run(function () {
+    return sodium.crypto_sign(msg, keys.secretKey)
+  }), hashes)
 
+  var sig_box = sodium.crypto_sign(msg, keys.secretKey)
+
+  print('sign_verify', run(function () {
+    return sodium.crypto_sign_open(sig_box, keys.publicKey)
+  }), hashes)
 
   print('secretbox_easy', run(function () {
     return sodium.crypto_secretbox_easy(msg, nonce, key)
