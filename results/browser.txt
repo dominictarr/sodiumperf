@@ -1,0 +1,71 @@
+operation                        ops/sec ops/ops(hash)
+hash_sha256                       122950 1.00
+hash                               46.53 2642
+auth                                1067 115
+verify                              1077 114
+box_keypair                        20.68 5945
+scalarmult                        28.026 4386
+sign_keypair                      61.122 2011
+sign_seed_keypair                 84.504 1454
+ed25519_pk_to_curve25519          190.95 644
+ed25519_sk_to_curve25519            4028 30.5
+--- encrypting 32 byte buffers ---
+hash_sha256                       125782 1.00
+hash                                3796 33.1
+auth                                 915 137
+auth_verify                          999 126
+sign                              40.788 3083
+sign_open                         23.322 5393
+sign_detached                      88.88 1415
+sign_verify_detached              23.368 5382
+secretbox_easy                     51383 2.45
+secretbox_open_easy                48192 2.61
+secretbox_open_easy (fail)         28137 4.47
+box_easy                          27.188 4626
+box_open_easy                     27.566 4562
+box_open_easy (fail)              27.404 4589
+--- encrypting 1024 byte buffers ---
+hash_sha256                         9246 1.00
+hash                             493.492 18.7
+auth                             346.345 26.7
+auth_verify                      323.323 28.6
+sign                              55.714 166
+sign_open                         19.646 471
+sign_detached                     68.747 134
+sign_verify_detached              23.436 395
+secretbox_easy                      6065 1.52
+secretbox_open_easy                 6034 1.53
+secretbox_open_easy (fail)          5910 1.56
+box_easy                          26.182 353
+box_open_easy                     27.188 340
+box_open_easy (fail)              27.243 339
+--- encrypting 8192 byte buffers ---
+hash_sha256                         1236 1.00
+hash                              68.272 18.1
+auth                              64.071 19.3
+auth_verify                       56.727 21.8
+sign                              22.924 53.9
+sign_open                         16.064 76.9
+sign_detached                     25.074 49.3
+sign_verify_detached              18.054 68.5
+secretbox_easy                       850 1.45
+secretbox_open_easy                  811 1.52
+secretbox_open_easy (fail)           899 1.37
+box_easy                          26.936 45.9
+box_open_easy                     27.972 44.2
+box_open_easy (fail)              27.918 44.3
+--- encrypting 1048576 byte buffers ---
+hash_sha256                        10.24 1.00
+hash                               1.875 5.46
+auth                               2.105 4.86
+auth_verify                         1.85 5.54
+sign                               3.884 2.64
+sign_open                           1.98 5.17
+sign_detached                      3.734 2.74
+sign_verify_detached                1.91 5.36
+secretbox_easy                      7.51 1.36
+secretbox_open_easy                7.427 1.38
+secretbox_open_easy (fail)         8.824 1.16
+box_easy                            7.17 1.43
+box_open_easy                      7.092 1.44
+box_open_easy (fail)               6.545 1.56

@@ -8,10 +8,13 @@
     "url": "git://github.com/dominictarr/sodiumperf.git"
   },
   "dependencies": {
-    "chloride": "1.0.20-1"
+    "chloride": "^1.0.23"
   },
   "devDependencies": {},
   "scripts": {
+    "bench:bindings": "node index.js | tee results/bindings.txt",
+    "bench:browser": "node index.js browser | tee results/browser.txt",
+    "bench": "npm run bench:browser; npm run bench:bindings",
     "test": "node index.js"
   },
   "author": "Dominic Tarr <dominic.tarr@gmail.com> (http://dominictarr.com)",
