@@ -12,6 +12,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "build": "browserify index.js > worker.js; browserify bin.js | indexhtmlify > index.html",
     "bench:bindings": "node index.js | tee results/bindings.txt",
     "bench:browser": "node index.js browser | tee results/browser.txt",
     "bench": "npm run bench:browser; npm run bench:bindings",

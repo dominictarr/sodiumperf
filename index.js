@@ -1,4 +1,37 @@
-var crypto = require('crypto')
+
+window = {}
+crypto = window.crypto || {}
+
+crypto.getRandomValues = function (buffer) {
+  for(var i = 0; i < buffer.length; i++)
+  buffer[i] = ~~(Math.random()*256)
+  return buffer
+}
+
+function log () {
+  var args = [].slice.call(arguments)
+  //we are web worker!
+  if('undefined' === typeof document) {
+    postMessage(args)
+  }
+  else if(process.title === 'browser') {
+    var pre = document.createElement('pre')
+    pre.textContent = args.join(' ')
+    document.body.appendChild(pre)
+    console.log
+  }
+  console.log.apply(console, args)
+}
+
+//PSUEDORANDOM, not cryptographically random.
+//this is acceptable because this isn't what we are benchmarking.
+//this script just creates a lot of random numbers and firefox errors.
+function randomBytes (n) {
+  var b = new Buffer(n)
+  for(var i = 0; i < n; i++)
+    b[i] = ~~(Math.random()*256)
+  return b
+}
 
 module.exports = function (sodium) {
 
@@ -12,7 +45,7 @@ module.exports = function (sodium) {
     return ((end-start)/1000) * i
   }
 
-  var random = crypto.randomBytes(32)
+  var random = randomBytes(32)
 
   function pad (n) {
     var s = ''
@@ -30,17 +63,16 @@ module.exports = function (sodium) {
 
   function print (name, ops, standard) {
     var rate = (standard/ops).toPrecision(3)
-    console.log(
+    log(
       even(name, ''+round(ops), 40), /e/.test(rate) ? ~~(standard/ops) : rate
     )
   }
 
 
-  var key = crypto.randomBytes(32)
+  var key = randomBytes(32)
   sodium.crypto_auth(random, key)
 
-
-  console.log(even('operation', 'ops/sec', 40), 'ops/ops(hash)')
+  log(even('operation', 'ops/sec', 40), 'ops/ops(hash)')
 
   var hashes
 
@@ -80,6 +112,8 @@ module.exports = function (sodium) {
   }), hashes)
 
   */
+
+  /*
   print('box_keypair', run(function () {
     return sodium.crypto_box_keypair()
   }), hashes)
@@ -90,21 +124,23 @@ module.exports = function (sodium) {
   print('scalarmult', run(function () {
     return sodium.crypto_scalarmult(alice.secretKey, bob.publicKey)
   }), hashes)
-
+  */
 
   //print('box_keypair_seed', run(function () {
   //  return sodium.crypto_box_keypair_seed(random)
   //}))
 
+  /*
   print('sign_keypair', run(function () {
     return sodium.crypto_sign_keypair()
   }), hashes)
+  */
 
   print('sign_seed_keypair', run(function () {
     return sodium.crypto_sign_seed_keypair(random)
   }), hashes)
 
-  var keys = sodium.crypto_sign_keypair()
+  var keys = sodium.crypto_sign_seed_keypair(random)
   print('ed25519_pk_to_curve25519', run(function () {
     return sodium.crypto_sign_ed25519_pk_to_curve25519(keys.publicKey)
   }), hashes)
@@ -115,13 +151,12 @@ module.exports = function (sodium) {
 
 
   function encrypt_perf (msg) {
-    var nonce = crypto.randomBytes(24)
+    var nonce = randomBytes(24)
 
-    var key = crypto.randomBytes(32)
-    var key2 = crypto.randomBytes(32)
+    var key = randomBytes(32)
+    var key2 = randomBytes(32)
 
     console.log('--- encrypting ' + msg.length + ' byte buffers ---')
-
 
     print('hash_sha256', hashes = run(function () {
       return sodium.crypto_hash_sha256(msg)
@@ -131,7 +166,7 @@ module.exports = function (sodium) {
       return sodium.crypto_hash(msg)
     }), hashes)
 
-    var key = crypto.randomBytes(32)
+    var key = randomBytes(32)
 
     print('auth', run(function () {
       return sodium.crypto_auth(msg, key)
@@ -195,17 +230,17 @@ module.exports = function (sodium) {
 
   }
 
-  encrypt_perf(crypto.randomBytes(32))
-  encrypt_perf(crypto.randomBytes(1024))
-  encrypt_perf(crypto.randomBytes(1024*8))
-  encrypt_perf(crypto.randomBytes(1024*1024))
+  encrypt_perf(randomBytes(32))
+  encrypt_perf(randomBytes(1024))
+  encrypt_perf(randomBytes(1024*8))
+  //encrypt_perf(crypto.randomBytes(1024*1024))
 
 }
 
 if(!module.parent) {
   module.exports(
-    process.argv[2] === 'browser'
+    process.argv[2] === 'browser' || process.title === 'browser'
     ? require('chloride/browser')
-    : require('chloride/bindings')
+    : ((require))('chloride/bindings')
   )
-}2
+}
